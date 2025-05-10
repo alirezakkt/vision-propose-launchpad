@@ -1,88 +1,269 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { User, Briefcase } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const About = () => {
+  const { t, language } = useLanguage();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  // Dragonfly animation
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Set canvas dimensions
+    canvas.width = 500;
+    canvas.height = 400;
+    
+    // Colors based on company theme
+    const primaryColor = '#45E3E3'; // Teal/cyan
+    const secondaryColor = '#F87060'; // Orange/coral
+    
+    let wingAngle = 0;
+    let posX = canvas.width / 2;
+    let posY = canvas.height / 2;
+    let directionX = 1;
+    let directionY = 0.5;
+    
+    // Dragonfly drawing function
+    function drawDragonfly(x: number, y: number, wingPosition: number) {
+      if (!ctx) return;
+      
+      // Save current state
+      ctx.save();
+      ctx.translate(x, y);
+      
+      // Body
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 25, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Head
+      ctx.beginPath();
+      ctx.arc(-30, 0, 15, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Antennas
+      ctx.strokeStyle = primaryColor;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-40, -5);
+      ctx.lineTo(-55, -15);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(-40, 5);
+      ctx.lineTo(-55, 15);
+      ctx.stroke();
+      
+      // Wings
+      ctx.globalAlpha = 0.7;
+      
+      // Top left wing
+      ctx.save();
+      ctx.rotate(wingPosition);
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.ellipse(-10, -20, 40, 15, Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      // Top right wing
+      ctx.save();
+      ctx.rotate(-wingPosition);
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.ellipse(10, -20, 40, 15, -Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      // Bottom left wing
+      ctx.save();
+      ctx.rotate(-wingPosition);
+      ctx.fillStyle = secondaryColor;
+      ctx.beginPath();
+      ctx.ellipse(-10, 20, 40, 15, -Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      // Bottom right wing
+      ctx.save();
+      ctx.rotate(wingPosition);
+      ctx.fillStyle = secondaryColor;
+      ctx.beginPath();
+      ctx.ellipse(10, 20, 40, 15, Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      ctx.globalAlpha = 1;
+      
+      // Tail
+      ctx.strokeStyle = primaryColor;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(25, 0);
+      ctx.lineTo(70, 0);
+      ctx.stroke();
+      
+      // Tail segments
+      for (let i = 0; i < 3; i++) {
+        const segmentPos = 35 + (i * 15);
+        ctx.beginPath();
+        ctx.arc(segmentPos, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      // Restore state
+      ctx.restore();
+    }
+    
+    // Animation loop
+    function animate() {
+      if (!ctx) return;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update wing angle
+      wingAngle += 0.15;
+      const wingPosition = Math.sin(wingAngle) * 0.5;
+      
+      // Update position
+      posX += directionX;
+      posY += directionY;
+      
+      // Boundary check
+      if (posX > canvas.width - 80 || posX < 80) {
+        directionX *= -1;
+      }
+      if (posY > canvas.height - 60 || posY < 60) {
+        directionY *= -1;
+      }
+      
+      // Add slight randomness to movement
+      if (Math.random() < 0.02) {
+        directionX = Math.random() * 2 - 1;
+        directionY = Math.random() - 0.5;
+      }
+      
+      // Draw dragonfly
+      drawDragonfly(posX, posY, wingPosition);
+      
+      // Continue animation
+      requestAnimationFrame(animate);
+    }
+    
+    // Start animation
+    animate();
+    
+    // Cleanup
+    return () => {
+      // No specific cleanup needed for canvas
+    };
+  }, []);
+  
   return (
     <div className="min-h-screen flex flex-col bg-background dark">
       <Header />
       
       <main className="flex-1">
         <Hero 
-          title="About Sanjaghak"
-          subtitle="Meet our team and learn about our mission to transform urban environments and industrial operations with AI."
+          title={t("about.hero.title")}
+          subtitle={t("about.hero.subtitle")}
         />
         
         {/* Company Overview */}
         <section className="py-16">
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
+              <div className={language === 'fa' ? 'text-right' : ''}>
+                <h2 className="text-3xl font-bold mb-6">{t("about.mission.title")}</h2>
                 <p className="text-lg mb-6">
-                  At Sanjaghak, we are dedicated to developing intelligent solutions that enhance urban living and industrial efficiency through the power of artificial intelligence.
+                  {t("about.mission.description1")}
                 </p>
                 <p className="mb-4">
-                  Our systems are designed to solve real-world challenges in traffic management, construction site monitoring, and heavy equipment maintenance, making cities smarter and industrial operations safer.
+                  {t("about.mission.description2")}
                 </p>
                 <p>
-                  We continuously innovate and improve our technologies to provide cutting-edge solutions that meet the evolving needs of municipalities, construction companies, and industrial facilities.
+                  {t("about.mission.description3")}
                 </p>
               </div>
               
-              <div className="bg-card p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-semibold mb-6">Core Values</h3>
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <div className="bg-primary/20 p-2 rounded-full mr-4 mt-1">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 12L10 15L17 8" stroke="#45E3E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-medium mb-1">Innovation</h4>
-                      <p className="text-sm text-muted-foreground">We continuously push the boundaries of what's possible with AI and computer vision technologies.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/20 p-2 rounded-full mr-4 mt-1">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 12L10 15L17 8" stroke="#45E3E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-medium mb-1">Reliability</h4>
-                      <p className="text-sm text-muted-foreground">Our systems are built to perform consistently and accurately in real-world conditions.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="bg-primary/20 p-2 rounded-full mr-4 mt-1">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 12L10 15L17 8" stroke="#45E3E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-medium mb-1">Impact</h4>
-                      <p className="text-sm text-muted-foreground">We measure our success by the positive difference our solutions make in urban and industrial environments.</p>
-                    </div>
-                  </li>
-                </ul>
+              <div className="flex justify-center items-center bg-card rounded-lg shadow-lg overflow-hidden">
+                {/* Animated Dragonfly Canvas */}
+                <canvas 
+                  ref={canvasRef} 
+                  className="w-full h-auto max-w-[500px] animate-fade-in p-4"
+                  style={{ maxHeight: '400px' }}
+                ></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Core Values Section */}
+        <section className="py-16 bg-card">
+          <div className="container">
+            <div className={`text-center mb-12 ${language === 'fa' ? 'text-right' : ''}`}>
+              <h2 className="text-3xl font-bold mb-6">{t("about.values.title")}</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-accent p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <div className="bg-primary/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4 mx-auto">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3V21M17 8L7 16M7 8L17 16" stroke="#45E3E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-center">{t("about.values.innovation")}</h3>
+                <p className={`text-sm text-muted-foreground ${language === 'fa' ? 'text-right' : ''}`}>
+                  {t("about.values.innovation.description")}
+                </p>
+              </div>
+              
+              <div className="bg-accent p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <div className="bg-primary/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4 mx-auto">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L14.5 9H22L16 13.5L18 21L12 17L6 21L8 13.5L2 9H9.5L12 2Z" stroke="#45E3E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-center">{t("about.values.reliability")}</h3>
+                <p className={`text-sm text-muted-foreground ${language === 'fa' ? 'text-right' : ''}`}>
+                  {t("about.values.reliability.description")}
+                </p>
+              </div>
+              
+              <div className="bg-accent p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                <div className="bg-primary/20 p-3 rounded-full w-14 h-14 flex items-center justify-center mb-4 mx-auto">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 12H18L15 21L9 3L6 12H2" stroke="#45E3E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold mb-3 text-center">{t("about.values.impact")}</h3>
+                <p className={`text-sm text-muted-foreground ${language === 'fa' ? 'text-right' : ''}`}>
+                  {t("about.values.impact.description")}
+                </p>
               </div>
             </div>
           </div>
         </section>
         
         {/* Team Section */}
-        <section className="py-16 bg-card">
+        <section className="py-16">
           <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Our Team</h2>
+            <div className={`text-center mb-12 ${language === 'fa' ? 'text-right' : ''}`}>
+              <h2 className="text-3xl font-bold mb-4">{t("about.team.title")}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Meet the experts behind Sanjaghak's innovative solutions.
+                {t("about.team.subtitle")}
               </p>
             </div>
             
@@ -92,15 +273,15 @@ const About = () => {
                   <div className="mx-auto bg-accent w-24 h-24 rounded-full flex items-center justify-center mb-4">
                     <User className="w-12 h-12 text-primary" />
                   </div>
-                  <CardTitle>Product Owner</CardTitle>
+                  <CardTitle>{t("about.team.product.title")}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-center mb-4">
-                    Leading our product vision and strategy, ensuring our solutions address real-world challenges effectively.
+                  <p className={`text-center mb-4 ${language === 'fa' ? 'text-right' : ''}`}>
+                    {t("about.team.product.description")}
                   </p>
-                  <div className="text-sm text-muted-foreground">
-                    <p className="mb-1"><strong>Location:</strong> Tehran Office</p>
-                    <p className="mb-1"><strong>Expertise:</strong> Product Strategy, Urban Solutions, AI Applications</p>
+                  <div className={`text-sm text-muted-foreground ${language === 'fa' ? 'text-right' : ''}`}>
+                    <p className="mb-1"><strong>{t("contact.office.address")}:</strong> {t("about.team.product.location")}</p>
+                    <p className="mb-1"><strong>{t("contact.office.email")}:</strong> product@sanjaghak.com</p>
                   </div>
                 </CardContent>
               </Card>
@@ -110,15 +291,15 @@ const About = () => {
                   <div className="mx-auto bg-accent w-24 h-24 rounded-full flex items-center justify-center mb-4">
                     <Briefcase className="w-12 h-12 text-secondary" />
                   </div>
-                  <CardTitle>Lead Developer</CardTitle>
+                  <CardTitle>{t("about.team.developer.title")}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-center mb-4">
-                    Architecting and implementing our advanced AI algorithms and computer vision systems.
+                  <p className={`text-center mb-4 ${language === 'fa' ? 'text-right' : ''}`}>
+                    {t("about.team.developer.description")}
                   </p>
-                  <div className="text-sm text-muted-foreground">
-                    <p className="mb-1"><strong>Location:</strong> Isfahan Office</p>
-                    <p className="mb-1"><strong>Expertise:</strong> AI Development, Computer Vision, System Architecture</p>
+                  <div className={`text-sm text-muted-foreground ${language === 'fa' ? 'text-right' : ''}`}>
+                    <p className="mb-1"><strong>{t("contact.office.address")}:</strong> {t("about.team.developer.location")}</p>
+                    <p className="mb-1"><strong>{t("contact.office.email")}:</strong> dev@sanjaghak.com</p>
                   </div>
                 </CardContent>
               </Card>
@@ -127,12 +308,12 @@ const About = () => {
         </section>
         
         {/* Cities Section */}
-        <section className="py-16">
+        <section className="py-16 bg-card">
           <div className="container">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Cities We Serve</h2>
+            <div className={`text-center mb-12 ${language === 'fa' ? 'text-right' : ''}`}>
+              <h2 className="text-3xl font-bold mb-4">{t("about.cities.title")}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Our solutions are currently deployed in several major cities across Iran.
+                {t("about.cities.subtitle")}
               </p>
             </div>
             

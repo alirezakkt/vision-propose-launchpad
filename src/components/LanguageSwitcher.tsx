@@ -8,11 +8,14 @@ const LanguageSwitcher: React.FC = () => {
   const { language, setLanguage } = useLanguage();
   
   const toggleLanguage = () => {
-    // First change the direction based on what the language WILL BE after toggling
-    document.documentElement.dir = language === 'en' ? 'rtl' : 'ltr';
+    // Store the new language we're switching to
+    const newLanguage = language === 'en' ? 'fa' : 'en';
     
-    // Then set the language
-    setLanguage(language === 'en' ? 'fa' : 'en');
+    // Set the document direction based on the new language
+    document.documentElement.dir = newLanguage === 'fa' ? 'rtl' : 'ltr';
+    
+    // Then update the language in context
+    setLanguage(newLanguage);
     
     // Refresh the page to ensure all content gets updated
     window.location.reload();
