@@ -10,7 +10,7 @@ const allProjects: ProjectCardProps[] = [
     id: "virtual-try-on",
     title: "Virtual Try-On System",
     description: "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision. The system projects clothing items onto the customer's body in real-time.",
-    image: "/lovable-uploads/1721322800607-8c38375eef04.png",
+    image: "/lovable-uploads/0673bad2-da23-49b2-8c37-137f2ad5e289.png",
     technologies: ["Computer Vision", "Image Processing", "AR Technology", "Real-time Rendering"]
   },
   {
