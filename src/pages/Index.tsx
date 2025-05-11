@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
@@ -34,6 +34,175 @@ const featuredProjects: ProjectCardProps[] = [
 ];
 
 const Index = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  // Dragonfly animation
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Set canvas dimensions
+    canvas.width = 600;
+    canvas.height = 400;
+    
+    // Colors based on company theme
+    const primaryColor = '#45E3E3'; // Teal/cyan
+    const secondaryColor = '#F87060'; // Orange/coral
+    
+    let wingAngle = 0;
+    let posX = canvas.width / 2;
+    let posY = canvas.height / 2;
+    let directionX = 1;
+    let directionY = 0.5;
+    
+    // Dragonfly drawing function
+    function drawDragonfly(x: number, y: number, wingPosition: number) {
+      if (!ctx) return;
+      
+      // Save current state
+      ctx.save();
+      ctx.translate(x, y);
+      
+      // Body
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 30, 10, 0, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Head
+      ctx.beginPath();
+      ctx.arc(-35, 0, 18, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Eyes
+      ctx.fillStyle = '#333';
+      ctx.beginPath();
+      ctx.arc(-40, -5, 5, 0, Math.PI * 2);
+      ctx.arc(-40, 5, 5, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Antennas
+      ctx.strokeStyle = primaryColor;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-45, -10);
+      ctx.lineTo(-65, -20);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(-45, 10);
+      ctx.lineTo(-65, 20);
+      ctx.stroke();
+      
+      // Wings
+      ctx.globalAlpha = 0.7;
+      
+      // Top left wing
+      ctx.save();
+      ctx.rotate(wingPosition);
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.ellipse(-10, -25, 50, 20, Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      // Top right wing
+      ctx.save();
+      ctx.rotate(-wingPosition);
+      ctx.fillStyle = primaryColor;
+      ctx.beginPath();
+      ctx.ellipse(10, -25, 50, 20, -Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      // Bottom left wing
+      ctx.save();
+      ctx.rotate(-wingPosition);
+      ctx.fillStyle = secondaryColor;
+      ctx.beginPath();
+      ctx.ellipse(-10, 25, 50, 20, -Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      // Bottom right wing
+      ctx.save();
+      ctx.rotate(wingPosition);
+      ctx.fillStyle = secondaryColor;
+      ctx.beginPath();
+      ctx.ellipse(10, 25, 50, 20, Math.PI/4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      
+      ctx.globalAlpha = 1;
+      
+      // Tail
+      ctx.strokeStyle = primaryColor;
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(30, 0);
+      ctx.lineTo(90, 0);
+      ctx.stroke();
+      
+      // Tail segments
+      for (let i = 0; i < 3; i++) {
+        const segmentPos = 45 + (i * 20);
+        ctx.beginPath();
+        ctx.arc(segmentPos, 0, 5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      // Restore state
+      ctx.restore();
+    }
+    
+    // Animation loop
+    function animate() {
+      if (!ctx) return;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update wing angle
+      wingAngle += 0.15;
+      const wingPosition = Math.sin(wingAngle) * 0.6;
+      
+      // Update position
+      posX += directionX;
+      posY += directionY;
+      
+      // Boundary check
+      if (posX > canvas.width - 100 || posX < 100) {
+        directionX *= -1;
+      }
+      if (posY > canvas.height - 80 || posY < 80) {
+        directionY *= -1;
+      }
+      
+      // Add slight randomness to movement
+      if (Math.random() < 0.02) {
+        directionX = Math.random() * 2 - 1;
+        directionY = Math.random() - 0.5;
+      }
+      
+      // Draw dragonfly
+      drawDragonfly(posX, posY, wingPosition);
+      
+      // Continue animation
+      requestAnimationFrame(animate);
+    }
+    
+    // Start animation
+    animate();
+    
+    // Cleanup
+    return () => {
+      // No specific cleanup needed for canvas
+    };
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-background dark">
       <Header />
@@ -62,12 +231,13 @@ const Index = () => {
                 </Link>
               </div>
               
-              <div className="relative aspect-video overflow-hidden rounded-lg shadow-xl">
-                <img 
-                  src="/lovable-uploads/d9b547f5-6e02-4718-bec4-403e612cfa6c.png" 
-                  alt="Sanjaghak Logo" 
-                  className="w-full h-full object-contain" 
-                />
+              <div className="relative bg-card rounded-lg shadow-lg overflow-hidden p-4">
+                {/* Animated Dragonfly Canvas */}
+                <canvas 
+                  ref={canvasRef} 
+                  className="w-full h-auto max-w-[600px] mx-auto"
+                  style={{ maxHeight: '400px' }}
+                ></canvas>
               </div>
             </div>
           </div>
