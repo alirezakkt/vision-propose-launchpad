@@ -1,17 +1,16 @@
-
 import React from 'react';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useLanguage } from '@/contexts/LanguageContext';
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const { t, language } = useLanguage();
-  
-  return (
-    <footer className={`w-full bg-card text-card-foreground py-8 border-t ${language === 'fa' ? 'font-[Vazirmatn]' : ''}`}>
+  const {
+    t,
+    language
+  } = useLanguage();
+  return <footer className={`w-full bg-card text-card-foreground py-8 border-t ${language === 'fa' ? 'font-[Vazirmatn]' : ''}`}>
       <div className="container mx-auto">
         <div className={`grid grid-cols-1 md:grid-cols-4 gap-8 ${language === 'fa' ? 'text-right' : ''}`}>
           <div className="col-span-1 md:col-span-1">
@@ -53,7 +52,7 @@ const Footer = () => {
               <li>{t('footer.tehran')}</li>
               <li>{t('footer.isfahan')}</li>
               <li>info@sanjaghak.com</li>
-              <li>+98 123 456 7890</li>
+              <li>+98 9182223581</li>
             </ul>
           </div>
 
@@ -91,8 +90,6 @@ const Footer = () => {
           <p>© {currentYear} Sanjaghak. {t('footer.rights')}</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
