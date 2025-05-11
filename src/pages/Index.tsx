@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,6 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
 const featuredProjects: ProjectCardProps[] = [
+  {
+    id: "virtual-try-on",
+    title: "Virtual Try-On System",
+    description: "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision.",
+    image: "/lovable-uploads/1721322800607-8c38375eef04.png",
+    technologies: ["Computer Vision", "AR Technology", "Real-time Rendering"]
+  },
   {
     id: "traffic-violations",
     title: "Traffic Violation Detection",
@@ -23,13 +29,6 @@ const featuredProjects: ProjectCardProps[] = [
     image: "/lovable-uploads/0e74f8e4-f3ea-4007-9d15-223b133ce2bc.png",
     cities: ["Isfahan"],
     technologies: ["IoT", "Computer Vision", "Mobile App"]
-  },
-  {
-    id: "equipment-monitoring",
-    title: "Heavy Equipment Monitoring",
-    description: "Advanced monitoring system for heavy machinery with wear detection and collision prevention.",
-    image: "/lovable-uploads/12c6d2c7-f631-49aa-95ac-a8cea09a870e.png",
-    technologies: ["Thermal Imaging", "AI Detection", "Predictive Maintenance"]
   }
 ];
 

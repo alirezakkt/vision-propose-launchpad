@@ -7,6 +7,13 @@ import ProjectCard, { ProjectCardProps } from '@/components/ProjectCard';
 
 const allProjects: ProjectCardProps[] = [
   {
+    id: "virtual-try-on",
+    title: "Virtual Try-On System",
+    description: "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision. The system projects clothing items onto the customer's body in real-time.",
+    image: "/lovable-uploads/1721322800607-8c38375eef04.png",
+    technologies: ["Computer Vision", "Image Processing", "AR Technology", "Real-time Rendering"]
+  },
+  {
     id: "traffic-violations",
     title: "Traffic Violation Detection",
     description: "AI-powered system for detecting traffic violations, particularly at red lights and intersections. The system captures images of vehicles, identifies violations, and generates reports.",
