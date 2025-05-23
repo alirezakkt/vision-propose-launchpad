@@ -1,5 +1,6 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useIpLocation } from '../hooks/useIpLocation';
 
 type Language = 'en' | 'fa';
 
@@ -246,6 +247,20 @@ const translations = {
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
+  const { isIran, loading } = useIpLocation();
+  
+  useEffect(() => {
+    if (!loading) {
+      // Set language based on detected location
+      if (isIran) {
+        console.log('Setting language to Persian based on location detection');
+        setLanguage('fa');
+      } else {
+        console.log('Setting language to English based on location detection');
+        setLanguage('en');
+      }
+    }
+  }, [isIran, loading]);
   
   const t = (key: string): string => {
     const currentTranslations = translations[language] || {};

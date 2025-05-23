@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "@/components/Header";
@@ -21,11 +20,11 @@ interface ProjectDetailData extends ProjectCardProps {
 const projectsData: Record<string, ProjectDetailData> = {
   "virtual-try-on": {
     id: "virtual-try-on",
-    title: "Virtual Try-On System",
+    title: "ThirdEye",
     description: "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision.",
     image: "/lovable-uploads/0673bad2-da23-49b2-8c37-137f2ad5e289.png",
     technologies: ["Computer Vision", "AR Technology", "Real-time Rendering", "Machine Learning", "Pose Estimation"],
-    fullDescription: "Our Virtual Try-On System revolutionizes the retail shopping experience by allowing customers to try on clothes virtually using a smart mirror. The system uses advanced computer vision and augmented reality to overlay clothing items on the customer's body in real-time, creating a seamless and engaging shopping experience.",
+    fullDescription: "Our ThirdEye system revolutionizes the retail shopping experience by allowing customers to try on clothes virtually using a smart mirror. The system uses advanced computer vision and augmented reality to overlay clothing items on the customer's body in real-time, creating a seamless and engaging shopping experience.",
     features: [
       "Real-time clothes overlay on customer's body",
       "Automatic size recommendation based on body measurements",

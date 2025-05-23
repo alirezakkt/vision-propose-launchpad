@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const featuredProjects: ProjectCardProps[] = [
   {
     id: "virtual-try-on",
-    title: "Virtual Try-On System",
+    title: "ThirdEye",
     description: "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision.",
     image: "/lovable-uploads/0673bad2-da23-49b2-8c37-137f2ad5e289.png",
     technologies: ["Computer Vision", "AR Technology", "Real-time Rendering"]

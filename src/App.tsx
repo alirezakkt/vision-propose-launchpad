@@ -13,7 +13,14 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import LearnMore from "./pages/LearnMore";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const AppContent = () => {
   return (
