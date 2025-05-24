@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -83,7 +84,20 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-poppins;
+    @apply bg-background text-foreground;
+    font-family: 'Poppins', 'Vazirmatn', sans-serif;
+  }
+  
+  /* Persian font for Persian text */
+  [lang="fa"], .persian-text {
+    font-family: 'Vazirmatn', 'Poppins', sans-serif;
+    direction: rtl;
+  }
+  
+  /* English font for English text */
+  [lang="en"], .english-text {
+    font-family: 'Poppins', 'Vazirmatn', sans-serif;
+    direction: ltr;
   }
 }
 

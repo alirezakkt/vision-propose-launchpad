@@ -21,6 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				poppins: ['Poppins', 'sans-serif'],
+				vazirmatn: ['Vazirmatn', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
