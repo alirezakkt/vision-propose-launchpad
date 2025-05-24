@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import ProjectCard, { ProjectCardProps } from '@/components/ProjectCard';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const featuredProjects: ProjectCardProps[] = [
   {
@@ -35,6 +36,7 @@ const featuredProjects: ProjectCardProps[] = [
 
 const Index = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { t, language } = useLanguage();
   
   // Dragonfly animation
   useEffect(() => {
@@ -204,14 +206,14 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background dark">
+    <div className={`min-h-screen flex flex-col bg-background dark ${language === 'fa' ? 'font-vazirmatn' : 'font-poppins'}`} dir={language === 'fa' ? 'rtl' : 'ltr'}>
       <Header />
       
       <main className="flex-1">
         <Hero 
-          title="Smart Urban Solutions Powered by AI"
-          subtitle="We develop intelligent traffic management and monitoring systems using cutting-edge artificial intelligence."
-          ctaText="Explore Our Solutions"
+          title={t('home.hero.title')}
+          subtitle={t('home.hero.subtitle')}
+          ctaText={t('home.hero.cta')}
         />
         
         {/* About Section */}
@@ -219,15 +221,15 @@ const Index = () => {
           <div className="container">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="fade-in">
-                <h2 className="text-3xl font-bold mb-6">About Sanjaghak</h2>
+                <h2 className="text-3xl font-bold mb-6">{t('home.about.title')}</h2>
                 <p className="text-lg mb-6">
-                  Sanjaghak is a leading provider of intelligent urban management and industrial monitoring solutions based on artificial intelligence.
+                  {t('home.about.description1')}
                 </p>
                 <p className="mb-8">
-                  Our systems help municipalities, construction companies, and industrial facilities improve safety, efficiency, and regulatory compliance through advanced computer vision and AI technologies.
+                  {t('home.about.description2')}
                 </p>
                 <Link to="/about">
-                  <Button variant="outline">Learn More About Us</Button>
+                  <Button variant="outline">{t('home.about.cta')}</Button>
                 </Link>
               </div>
               
@@ -247,9 +249,9 @@ const Index = () => {
         <section className="py-16">
           <div className="container">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('home.projects.title')}</h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Discover how our innovative solutions are transforming urban environments and industrial operations.
+                {t('home.projects.subtitle')}
               </p>
             </div>
             
@@ -261,7 +263,7 @@ const Index = () => {
             
             <div className="text-center mt-12">
               <Link to="/projects">
-                <Button>View All Projects</Button>
+                <Button>{t('home.projects.cta')}</Button>
               </Link>
             </div>
           </div>
@@ -270,12 +272,12 @@ const Index = () => {
         {/* Call to Action */}
         <section className="bg-primary/10 py-16">
           <div className="container text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Operations?</h2>
+            <h2 className="text-3xl font-bold mb-6">{t('home.cta.title')}</h2>
             <p className="text-lg mb-8 max-w-2xl mx-auto">
-              Our team of experts is ready to help you implement intelligent solutions tailored to your specific needs.
+              {t('home.cta.description')}
             </p>
             <Link to="/contact">
-              <Button size="lg">Contact Us Today</Button>
+              <Button size="lg">{t('home.cta.button')}</Button>
             </Link>
           </div>
         </section>

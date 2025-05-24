@@ -250,17 +250,30 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   const { isIran, loading } = useIpLocation();
   
   useEffect(() => {
+    console.log('Location detection status:', { isIran, loading });
+    
     if (!loading) {
-      // Set language based on detected location
-      if (isIran) {
-        console.log('Setting language to Persian based on location detection');
-        setLanguage('fa');
-      } else {
-        console.log('Setting language to English based on location detection');
-        setLanguage('en');
-      }
+      const newLanguage = isIran ? 'fa' : 'en';
+      console.log(`Setting language to ${newLanguage} based on IP location`);
+      setLanguage(newLanguage);
+      
+      // Apply direction and font to document
+      document.documentElement.dir = isIran ? 'rtl' : 'ltr';
+      document.documentElement.lang = newLanguage;
+      document.body.className = isIran ? 'font-vazirmatn' : 'font-poppins';
     }
   }, [isIran, loading]);
+
+  // Handle manual language changes
+  const handleLanguageChange = (newLanguage: Language) => {
+    console.log(`Manually changing language to ${newLanguage}`);
+    setLanguage(newLanguage);
+    
+    // Apply direction and font to document
+    document.documentElement.dir = newLanguage === 'fa' ? 'rtl' : 'ltr';
+    document.documentElement.lang = newLanguage;
+    document.body.className = newLanguage === 'fa' ? 'font-vazirmatn' : 'font-poppins';
+  };
   
   const t = (key: string): string => {
     const currentTranslations = translations[language] || {};
@@ -268,7 +281,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
   
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleLanguageChange, t }}>
       {children}
     </LanguageContext.Provider>
   );

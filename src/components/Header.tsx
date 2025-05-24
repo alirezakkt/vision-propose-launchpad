@@ -15,8 +15,12 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Apply RTL/LTR classes based on language
+  const directionClass = language === 'fa' ? 'rtl' : 'ltr';
+  const fontClass = language === 'fa' ? 'font-vazirmatn' : 'font-poppins';
+
   return (
-    <header className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${language === 'fa' ? 'font-vazirmatn' : 'font-poppins'}`}>
+    <header className={`sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ${fontClass}`} dir={directionClass}>
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <Logo />
@@ -52,7 +56,7 @@ const Header = () => {
         
         {/* Mobile navigation */}
         {isMenuOpen && (
-          <div className={`absolute top-16 left-0 right-0 bg-background border-b shadow-lg md:hidden z-50 ${language === 'fa' ? 'font-vazirmatn' : 'font-poppins'}`}>
+          <div className={`absolute top-16 left-0 right-0 bg-background border-b shadow-lg md:hidden z-50 ${fontClass}`} dir={directionClass}>
             <nav className={`flex flex-col p-4 gap-4 ${language === 'fa' ? 'text-right' : ''}`}>
               <Link 
                 to="/" 
