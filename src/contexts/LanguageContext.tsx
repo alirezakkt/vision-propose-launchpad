@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useIpLocation } from '../hooks/useIpLocation';
 
@@ -17,6 +16,7 @@ const translations = {
     // Navigation
     "nav.home": "Home",
     "nav.projects": "Projects",
+    "nav.learnMore": "Learn More",
     "nav.about": "About",
     "nav.contact": "Contact",
     
@@ -41,6 +41,22 @@ const translations = {
     "projects.tech.title": "Our Technologies",
     "projects.tech.subtitle": "We leverage cutting-edge technologies to deliver powerful, intelligent solutions.",
     
+    // Project Descriptions
+    "project.thirdeye.title": "ThirdEye",
+    "project.thirdeye.description": "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision.",
+    "project.trafficViolation.title": "Traffic Violation Detection",
+    "project.trafficViolation.description": "AI-powered system for detecting traffic violations, particularly at red lights and intersections.",
+    "project.smartParking.title": "Smart Parking System", 
+    "project.smartParking.description": "Intelligent parking management solution to optimize parking space utilization and improve user experience.",
+    "project.equipmentMonitoring.title": "Heavy Equipment Monitoring",
+    "project.equipmentMonitoring.description": "Advanced monitoring system for heavy machinery with wear detection and collision prevention to improve safety and efficiency.",
+    "project.collisionWarning.title": "Collision Warning System",
+    "project.collisionWarning.description": "Intelligent system that uses 360° cameras to monitor equipment surroundings and warn operators of potential collisions.",
+    "project.constructionVehicles.title": "Construction Vehicle Tracking", 
+    "project.constructionVehicles.description": "System for tracking and managing construction vehicles to prevent unauthorized construction and improve site management.",
+    "project.stationaryViolations.title": "Stationary Traffic Violations",
+    "project.stationaryViolations.description": "System for detecting and reporting stationary traffic violations such as illegal parking and unauthorized stops.",
+
     // About
     "about.hero.title": "About Sanjaghak",
     "about.hero.subtitle": "Meet our team and learn about our mission to transform urban environments and industrial operations with AI.",
@@ -98,20 +114,6 @@ const translations = {
     "footer.isfahan": "Isfahan Office",
     "footer.rights": "All rights reserved.",
     
-    // Projects
-    "project.trafficViolation": "Traffic Violation Detection",
-    "project.trafficViolation.description": "AI-powered system for detecting traffic violations, particularly at red lights and intersections. The system captures images of vehicles, identifies violations, and generates reports.",
-    "project.smartParking": "Smart Parking System",
-    "project.smartParking.description": "Intelligent parking management solution to optimize parking space utilization and improve user experience in urban areas.",
-    "project.equipmentMonitoring": "Heavy Equipment Monitoring",
-    "project.equipmentMonitoring.description": "Advanced monitoring system for heavy machinery with wear detection and collision prevention to improve safety and efficiency.",
-    "project.collisionWarning": "Collision Warning System",
-    "project.collisionWarning.description": "Intelligent system that uses 360° cameras to monitor equipment surroundings and warn operators of potential collisions.",
-    "project.constructionVehicles": "Construction Vehicle Tracking",
-    "project.constructionVehicles.description": "System for tracking and managing construction vehicles to prevent unauthorized construction and improve site management.",
-    "project.stationaryViolations": "Stationary Traffic Violations",
-    "project.stationaryViolations.description": "System for detecting and reporting stationary traffic violations such as illegal parking and unauthorized stops.",
-    
     // Technologies
     "tech.computerVision": "Computer Vision",
     "tech.computerVision.description": "Advanced image processing algorithms for object detection and recognition.",
@@ -132,6 +134,7 @@ const translations = {
     // Navigation
     "nav.home": "خانه",
     "nav.projects": "پروژه‌ها",
+    "nav.learnMore": "اطلاعات بیشتر",
     "nav.about": "درباره ما",
     "nav.contact": "تماس با ما",
     
@@ -156,6 +159,22 @@ const translations = {
     "projects.tech.title": "فناوری‌های ما",
     "projects.tech.subtitle": "ما از فناوری‌های پیشرفته برای ارائه راهکارهای قدرتمند و هوشمند استفاده می‌کنیم.",
     
+    // Project Descriptions
+    "project.thirdeye.title": "چشم سوم",
+    "project.thirdeye.description": "سیستم آینه هوشمند که به خریداران امکان امتحان مجازی لباس با استفاده از هوش مصنوعی و بینایی ماشین را می‌دهد.",
+    "project.trafficViolation.title": "تشخیص تخلفات ترافیکی",
+    "project.trafficViolation.description": "سیستم مبتنی بر هوش مصنوعی برای تشخیص تخلفات ترافیکی، به ویژه در چراغ‌های قرمز و تقاطع‌ها.",
+    "project.smartParking.title": "سیستم پارکینگ هوشمند",
+    "project.smartParking.description": "راهکار مدیریت هوشمند پارکینگ برای بهینه‌سازی استفاده از فضای پارکینگ و بهبود تجربه کاربر.",
+    "project.equipmentMonitoring.title": "نظارت بر تجهیزات سنگین",
+    "project.equipmentMonitoring.description": "سیستم نظارت پیشرفته برای ماشین‌آلات سنگین با تشخیص فرسودگی و پیشگیری از تصادف برای بهبود ایمنی و کارایی.",
+    "project.collisionWarning.title": "سیستم هشدار تصادف",
+    "project.collisionWarning.description": "سیستم هوشمندی که از دوربین‌های ۳۶۰ درجه برای نظارت بر اطراف تجهیزات و هشدار به اپراتورها درباره تصادفات احتمالی استفاده می‌کند.",
+    "project.constructionVehicles.title": "ردیابی وسایل نقلیه ساخت و ساز",
+    "project.constructionVehicles.description": "سیستمی برای ردیابی و مدیریت وسایل نقلیه ساخت و ساز برای جلوگیری از ساخت و ساز غیرمجاز و بهبود مدیریت سایت.",
+    "project.stationaryViolations.title": "تخلفات ترافیکی ایستا",
+    "project.stationaryViolations.description": "سیستمی برای تشخیص و گزارش تخلفات ترافیکی ایستا مانند پارک غیرقانونی و توقف‌های غیرمجاز.",
+
     // About
     "about.hero.title": "درباره سنجاقک",
     "about.hero.subtitle": "با تیم ما آشنا شوید و درباره ماموریت ما برای تحول محیط‌های شهری و عملیات صنعتی با هوش مصنوعی بیشتر بدانید.",
@@ -212,20 +231,6 @@ const translations = {
     "footer.tehran": "دفتر تهران",
     "footer.isfahan": "دفتر اصفهان",
     "footer.rights": "تمامی حقوق محفوظ است.",
-    
-    // Projects
-    "project.trafficViolation": "تشخیص تخلفات ترافیکی",
-    "project.trafficViolation.description": "سیستم مبتنی بر هوش مصنوعی برای تشخیص تخلفات ترافیکی، به ویژه در چراغ‌های قرمز و تقاطع‌ها. این سیستم تصاویر وسایل نقلیه را ثبت، تخلفات را شناسایی و گزارش‌ها را تولید می‌کند.",
-    "project.smartParking": "سیستم پارکینگ هوشمند",
-    "project.smartParking.description": "راهکار مدیریت هوشمند پارکینگ برای بهینه‌سازی استفاده از فضای پارکینگ و بهبود تجربه کاربر در مناطق شهری.",
-    "project.equipmentMonitoring": "نظارت بر تجهیزات سنگین",
-    "project.equipmentMonitoring.description": "سیستم نظارت پیشرفته برای ماشین‌آلات سنگین با تشخیص فرسودگی و پیشگیری از تصادف برای بهبود ایمنی و کارایی.",
-    "project.collisionWarning": "سیستم هشدار تصادف",
-    "project.collisionWarning.description": "سیستم هوشمندی که از دوربین‌های ۳۶۰ درجه برای نظارت بر اطراف تجهیزات و هشدار به اپراتورها درباره تصادفات احتمالی استفاده می‌کند.",
-    "project.constructionVehicles": "ردیابی وسایل نقلیه ساخت و ساز",
-    "project.constructionVehicles.description": "سیستمی برای ردیابی و مدیریت وسایل نقلیه ساخت و ساز برای جلوگیری از ساخت و ساز غیرمجاز و بهبود مدیریت سایت.",
-    "project.stationaryViolations": "تخلفات ترافیکی ایستا",
-    "project.stationaryViolations.description": "سیستمی برای تشخیص و گزارش تخلفات ترافیکی ایستا مانند پارک غیرقانونی و توقف‌های غیرمجاز.",
     
     // Technologies
     "tech.computerVision": "بینایی ماشین",

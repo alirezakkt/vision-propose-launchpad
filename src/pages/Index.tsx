@@ -8,35 +8,36 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-const featuredProjects: ProjectCardProps[] = [
-  {
-    id: "virtual-try-on",
-    title: "ThirdEye",
-    description: "Smart mirror system allowing shoppers to virtually try on clothes using AI and computer vision.",
-    image: "/lovable-uploads/0673bad2-da23-49b2-8c37-137f2ad5e289.png",
-    technologies: ["Computer Vision", "AR Technology", "Real-time Rendering"]
-  },
-  {
-    id: "traffic-violations",
-    title: "Traffic Violation Detection",
-    description: "AI-powered system for detecting traffic violations, particularly at red lights and intersections.",
-    image: "/lovable-uploads/b3b90ac5-dca8-437c-bbdf-1973cd95a8eb.png",
-    cities: ["Tehran", "Shiraz"],
-    technologies: ["Computer Vision", "AI", "Image Recognition"]
-  },
-  {
-    id: "smart-parking",
-    title: "Smart Parking System",
-    description: "Intelligent parking management solution to optimize parking space utilization and improve user experience.",
-    image: "/lovable-uploads/0e74f8e4-f3ea-4007-9d15-223b133ce2bc.png",
-    cities: ["Isfahan"],
-    technologies: ["IoT", "Computer Vision", "Mobile App"]
-  }
-];
-
 const Index = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { t, language } = useLanguage();
+  
+  // Generate featured projects with translations
+  const featuredProjects: ProjectCardProps[] = [
+    {
+      id: "virtual-try-on",
+      title: t('project.thirdeye.title'),
+      description: t('project.thirdeye.description'),
+      image: "/lovable-uploads/0673bad2-da23-49b2-8c37-137f2ad5e289.png",
+      technologies: ["Computer Vision", "AR Technology", "Real-time Rendering"]
+    },
+    {
+      id: "traffic-violations",
+      title: t('project.trafficViolation.title'),
+      description: t('project.trafficViolation.description'),
+      image: "/lovable-uploads/b3b90ac5-dca8-437c-bbdf-1973cd95a8eb.png",
+      cities: ["Tehran", "Shiraz"],
+      technologies: ["Computer Vision", "AI", "Image Recognition"]
+    },
+    {
+      id: "smart-parking",
+      title: t('project.smartParking.title'),
+      description: t('project.smartParking.description'),
+      image: "/lovable-uploads/0e74f8e4-f3ea-4007-9d15-223b133ce2bc.png",
+      cities: ["Isfahan"],
+      technologies: ["IoT", "Computer Vision", "Mobile App"]
+    }
+  ];
   
   // Dragonfly animation
   useEffect(() => {
